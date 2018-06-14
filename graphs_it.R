@@ -28,7 +28,7 @@ read_csv("regularContributorsPP.csv") %>%
   scale_y_continuous(name = "Numero di giornalisti") +
   scale_x_continuous(name = "", breaks = scales::pretty_breaks(n = 5)) +
   theme_minimal(base_family = "Carlito") +
-  labs(title = expression(paste("Circa la metà dei giornalisti il cui nome appare su ", italic("Pervy Pridnestrovski"), " è un contributore regolare della testata")),
+  labs(title = expression(paste("Circa la metà dei giornalisti il cui nome appare su ", italic("Pervy Pridnestrovski"), " è un contributore regolare")),
        subtitle = expression(paste("Numero totale dei giornalisti il cui nome appare su ", italic("Pervy Pridnestrovski"), " tra gennaio 2012 e maggio 2018")))
 
 ggsave(filename = "regularContributorsPP_it.png", width = 20, height = 10, units = "cm")
@@ -90,3 +90,21 @@ read_csv(file = "allLeave_PP.csv") %>%
         legend.text = element_text(margin = margin(l =1, r = 10), hjust = 0))
 
 ggsave(filename = "allLeave_PP_it.png", width = 20, height = 10, units = "cm")
+
+
+
+read_csv(file = "leftIn2017.csv") %>% 
+  ggplot(mapping = aes(x = date, y = author, colour = LeftIn2017)) +
+  scale_x_date(name = "") +
+  scale_y_discrete("", labels = NULL) +
+  scale_colour_viridis_d() +
+  geom_point() +
+  theme_minimal(base_family = "Carlito") +
+  geom_vline(xintercept = c(as.numeric(as.Date("2016-12-11"))), linetype = 2) +
+  guides(colour=FALSE) +
+  labs(title = "Ogni linea rappresenta un giornalista, ogni punto un notizia",
+       subtitle = "I due giornalisti che hanno abbandonato dopo il voto del 2016 sono evidenziati in viola.\nLa linea tratteggiata verticale indica il giorno del voto",
+       caption = expression(paste("* Include solo collaboratori regolari di ", italic("Pervy Pridnestrovski"))))
+
+
+ggsave(filename = "leftIn2017_it.png", width = 20, height = 10, units = "cm")
